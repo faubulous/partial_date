@@ -1,6 +1,6 @@
 {
   "name": "maximelune/partial_date",
-  "version": "master-dev",
+  "version": "8.x.1-dev",
   "dist": {
     "url": "https://github.com/maximelune/partial_date/archive/master-dev.zip",
     "type": "zip"
