@@ -8,6 +8,6 @@
     }
   ],
   "require": {
-    "maximelune/partial_date": "master-dev"
+    "maximelune/partial_date": "@dev"
   }
 }
