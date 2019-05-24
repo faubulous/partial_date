@@ -8,6 +8,6 @@
     }
   ],
   "require": {
-    "maximelune/partial_date": "1.0.0"
+    "maximelune/partial_date": "@dev"
   }
 }
