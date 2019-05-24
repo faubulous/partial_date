@@ -1,6 +1,6 @@
 {
   "name": "maximelune/partial_date",
-  "version": "1.0.0",
+  "version": "1.0.0-dev",
   "repositories": [
     {
       "type": "vcs",
@@ -8,6 +8,6 @@
     }
   ],
   "require": {
-    "maximelune/partial_date": "master-dev"
+    "maximelune/partial_date": "1.0.0-dev"
   }
 }
