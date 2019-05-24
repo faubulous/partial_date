@@ -1,0 +1,8 @@
+{
+  "name": "tstoeckler/partial_date",
+  "version": "8.x-1.x-dev",
+  "dist": {
+    "url": "https://github.com/tstoeckler/partial_date/archive/8.x-1.x-dev.zip",
+    "type": "zip"
+  }
+}

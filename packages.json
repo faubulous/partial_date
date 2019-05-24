@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "tstoeckler/partial_date": {
+      "8.x-1.x-dev": { @composer.json }
+    }
+  }
+}
