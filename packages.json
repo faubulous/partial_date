@@ -1,0 +1,9 @@
+{
+  "packages": {
+    "maximelune/partial_date": {
+      "dev-master": { @composer.json },
+      "1.0.0-dev": { @composer.json },
+      "1.0.0": { @composer.json }
+    }
+  }
+}
