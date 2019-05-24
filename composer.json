@@ -1,6 +1,7 @@
 {
   "name": "maximelune/partial_date",
   "version": "1.0.0",
+  "type":"drupal-module",
   "repositories": [
     {
       "type": "vcs",
