@@ -1,8 +1,8 @@
 {
-  "name": "tstoeckler/partial_date",
-  "version": "8.x-1.x-dev",
+  "name": "maximelune/partial_date",
+  "version": "master-dev",
   "dist": {
-    "url": "https://github.com/tstoeckler/partial_date/archive/8.x-1.x-dev.zip",
+    "url": "https://github.com/maximelune/partial_date/archive/master-dev.zip",
     "type": "zip"
   }
 }
