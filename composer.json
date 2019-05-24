@@ -4,5 +4,8 @@
   "dist": {
     "url": "https://github.com/maximelune/partial_date/archive/master-dev.zip",
     "type": "zip"
+  },
+  "require": {
+    "maximelune/partial_date": "master@dev"
   }
 }
