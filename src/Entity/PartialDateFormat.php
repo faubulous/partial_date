@@ -28,6 +28,11 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "id" = "id",
  *     "label" = "label",
  *   },
+ *   config_export = {
+ *     "id" = "id",
+ *     "label" = "label",
+ *     "uuid" = "uuid"
+ *   },
  *   links = {
  *     "collection" = "/admin/config/regional/partial-date-format",
  *     "add-form" = "/admin/config/regional/partial-date-format/add",
