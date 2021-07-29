@@ -29,13 +29,14 @@ class PartialDateTimeRangeItem extends PartialDateTimeItem {
     $properties = parent::propertyDefinitions($field_definition);
 
     $minimum_components = $field_definition->getSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
 
     $properties['timestamp_to'] = DataDefinition::create('float')
       ->setLabel(t('End timestamp'))
       ->setDescription('Contains the best approximation for end value of the partial date');
 
     foreach (partial_date_components() as $key => $label) {
-      if ($key == 'timezone') {
+      if ($key == 'timezone' || !isset($minimum_components['to'])) {
         continue;
       }
 
@@ -194,6 +195,8 @@ class PartialDateTimeRangeItem extends PartialDateTimeItem {
   public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
     $elements = parent::storageSettingsForm($form, $form_state, $has_data);
     $minimum_components = $this->getSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     foreach (partial_date_components() as $key => $label) {
       $elements['minimum_components']['from']['granularity'][$key]['#title'] = t('From @date_component', array('@date_component' => $label));
     }

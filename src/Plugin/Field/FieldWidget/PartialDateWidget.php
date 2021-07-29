@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Drupal\partial_date\Plugin\Field\FieldWidget;
 
@@ -82,6 +82,9 @@ class PartialDateWidget extends WidgetBase implements ContainerFactoryPluginInte
 
     $element['#theme_wrappers'][] = 'form_element';
 
+    $minimum_components = $this->getFieldSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     $element['from'] = array(
       '#type' => 'partial_datetime_element',
       '#title' => t('Date'),
@@ -89,7 +92,7 @@ class PartialDateWidget extends WidgetBase implements ContainerFactoryPluginInte
       '#default_value' => $item->from,
       '#field_sufix' => '',
       '#granularity' => $components,
-      '#minimum_components' => $this->getFieldSetting('minimum_components')['from']['granularity'],
+      '#minimum_components' => $minimum_components['from']['granularity'],
       '#component_styles' => $config->get('partial_date_component_field_inline_styles'),
       '#increments' => $this->getSetting('increments'),
     );
@@ -368,6 +371,8 @@ class PartialDateWidget extends WidgetBase implements ContainerFactoryPluginInte
   protected function filterComponents(&$components) {
     // Do not filter the timezone if it is a minimum component.
     $minimum_components = $this->getFieldSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     $tz_handling = $this->getSetting('tz_handling');
     if (!$minimum_components['from']['granularity']['timezone'] && $tz_handling !== 'none' && $tz_handling !== 'date') {
       unset($components['timezone']);

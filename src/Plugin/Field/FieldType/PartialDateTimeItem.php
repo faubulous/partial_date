@@ -28,6 +28,8 @@ class PartialDateTimeItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $minimum_components = $field_definition->getSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     $properties['timestamp'] = DataDefinition::create('float')
       ->setLabel(t('Timestamp'))
       ->setDescription('Contains best approximation for date value');
@@ -37,13 +39,14 @@ class PartialDateTimeItem extends FieldItemBase {
     $properties['txt_long'] = DataDefinition::create('string')
       ->setLabel(t('Long text'))
       ->setRequired($minimum_components['txt_long']);
-    //Components: 'year', 'month', 'day', 'hour', 'minute', 'second', 'timezone'
+
+    // Components: 'year', 'month', 'day', 'hour', 'minute', 'second', 'timezone'
     foreach (partial_date_components() as $key => $label) {
       if ($key == 'timezone') {
         $properties[$key] = DataDefinition::create('string')
           ->setLabel($label);
       }
-      else {
+      else if(isset($minimum_components['from'])) {
         $properties[$key] = DataDefinition::create('integer')
           ->setLabel($label)
           ->setDescription(t('The ' . $label . ' for the starting date component.'))
@@ -258,6 +261,8 @@ class PartialDateTimeItem extends FieldItemBase {
     );
 
     $minimum_components = $this->getSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     foreach (partial_date_components() as $key => $label) {
       $elements['minimum_components']['from']['granularity'][$key] = array(
         '#type' => 'checkbox',

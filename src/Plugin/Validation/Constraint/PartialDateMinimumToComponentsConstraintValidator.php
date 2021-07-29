@@ -24,6 +24,7 @@ class PartialDateMinimumToComponentsConstraintValidator extends ConstraintValida
     // Get the file to execute validators.
     $field_storage_definition = $value->getFieldDefinition()->getFieldStorageDefinition();
     $minimum_components = $field_storage_definition->getSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
     foreach (partial_date_components() as $name => $label) {
       $required =
         $minimum_components['to']['granularity'][$name]

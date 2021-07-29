@@ -96,7 +96,7 @@ class PartialDateFormatter extends FormatterBase implements ContainerFactoryPlug
       'format' => 'short',
     ) + parent::defaultSettings();
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -123,7 +123,7 @@ class PartialDateFormatter extends FormatterBase implements ContainerFactoryPlug
 //      ),
       '#description' => t('You can use any of the predefined partial date formats. '
           . 'Or, you can configure partial date formats <a href=":config">here</a>.',
-          array(':config' => '/admin/config/regional/partial-date-formats')),
+          array(':config' => '/admin/config/regional/partial-date-format')),
     );
 
     return $elements;

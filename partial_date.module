@@ -285,3 +285,28 @@ function _partial_date_component_type($key) {
       return FALSE;
   }
 }
+
+/**
+ * Transform the "minimum_components" settings from the format "from_granularity_year"
+ * into a nested array ["from"]["granularity"]["year"]
+ */
+function _parse_minimum_components_to_array($value) {
+  $result = [
+    "txt_short" => $value["txt_short"],
+    "txt_long" => $value["txt_long"]
+  ];
+
+  foreach(["from", "to"] as $x) {
+    foreach(["granularity", "estimates"] as $y) {
+      foreach(["year", "month", "day", "hour", "minute", "second", "timezone"] as $z) {
+        $key = $x."_".$y."_".$z;
+
+        if(isset($value[$key])) {
+          $result[$x][$y][$z] = $value[$key];
+        }
+      }
+    }
+  }
+
+  return $result;
+}

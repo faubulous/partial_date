@@ -58,6 +58,7 @@ class PartialDateRangeFormatter extends PartialDateFormatter {
       else {
         $from = $item->from;
         $to = $item->to;
+
         if ($this->getSetting('range_reduce')) {
           $this->reduceRange($from, $to);
         }
@@ -80,7 +81,7 @@ class PartialDateRangeFormatter extends PartialDateFormatter {
         elseif ($to) {
           $element[$delta] = [
             '#theme' => 'partial_date',
-            '#date' => $from,
+            '#date' => $to,
             '#format' => $this->getFormat(),
           ];
         }
@@ -99,56 +100,69 @@ class PartialDateRangeFormatter extends PartialDateFormatter {
    * Ex. 2015 Jun to 2015 Sep => 2015 Jun to Sep
    * but Jun 2015 to Sep 2015 => Jun to Sep 2015
    * Rules:
-   * 1. If all date correspondent components are equal, keep only left side and quit (no time compression)
-   * 2. If time components are present, stop further compression (mixed date & time compression is confusing).
-   * 3. If same year, check format order:
+   * 1. If from and to components render equal, keep only left side and quit.
+   * 2. If all date correspondent components are equal, keep only left side and quit (no time compression)
+   * 3. If time components are present, stop further compression (mixed date & time compression is confusing).
+   * 4. If same year, check format order:
    *    a. YYYY / MM - compress right  (2015 Jun - Sep)
    *    b. MM / YYYY - compress left   (Jun - Sep 2015)
    *    (not same year - stop further compression)
-   * 4. If same month, check format order:
+   * 5. If same month, check format order:
    *    a. MM / DD - compress right  (Jun 15 - 25)
    *    b. DD / MM - compress left   (15 - 25 Jun)
    * (same day was
    */
   protected function reduceRange(array &$from, array &$to) {
+    $format = $this->getFormat();
+
+    $x = $this->dateFormatter->format($from, $format);
+    $y = $this->dateFormatter->format($to, $format);
+
+    if($x == $y) {
+      $to = NULL;
+      return;
+    }
+
     $sameDate = ($from['year']  == $to['year']) &&
                 ($from['month'] == $to['month']) &&
                 ($from['day']   == $to['day']);
+
     if ($sameDate) {
       $to['year']  = NULL;
       $to['month'] = NULL;
       $to['day']   = NULL;
       return;
     }
+
     $hasTime =  isset($from['hour'])   || isset($to['hour']) ||
                 isset($from['minute']) || isset($to['minute']) ||
                 isset($from['second']) || isset($to['second']);
+
     if ($hasTime) {
       return;
     }
+
     if ($from['year'] == $to['year']) {
-      $format = $this->getFormat();
       $year_weight = $format->getComponent('year')['weight'];
       $month_weight = $format->getComponent('month')['weight'];
-      //If "year before month" compress right (otherwise left)
+
+      // If "year before month" compress right (otherwise left)
       if ($year_weight <= $month_weight) {
         $to['year'] = NULL;
-      }
-      else {
+      } else {
         $from['year'] = NULL;
       }
 
       if ($from['month'] == $to['month']) {
         $day_weight = $format->getComponent('month')['weight'];
+
         //If "month before day" compress right (otherwise left)
         if ($month_weight <= $day_weight) {
           $to['month'] = NULL;
-        }
-        else {
+        } else {
           $from['month'] = NULL;
         }
       }
     }
   }
-
 }

@@ -40,6 +40,10 @@ class PartialDateRangeWidget extends PartialDateWidget {
       '#type' => 'markup',
       '#markup' => '<div class="partial-date-separator">&nbsp;' . $help_txt['range_separator'] . '&nbsp;</div>',
     );
+
+    $minimum_components = $this->getFieldSetting('minimum_components');
+    $minimum_components = _parse_minimum_components_to_array($minimum_components);
+
     $element['to'] = array(
       '#type' => 'partial_datetime_element',
       '#title' => t('End date'),
@@ -47,7 +51,7 @@ class PartialDateRangeWidget extends PartialDateWidget {
       '#default_value' => $item->to,
       '#field_sufix' => '_to',
       '#granularity' => $components,
-      '#minimum_components' => $this->getFieldSetting('minimum_components')['to']['granularity'],
+      '#minimum_components' => $minimum_components['to']['granularity'],
       '#component_styles' => $config->get('partial_date_component_field_inline_styles'),
       '#increments' => $this->getSetting('increments'),
     );
